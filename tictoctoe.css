@@ -1,0 +1,128 @@
+*, *::after, *::before { /*after va before dung de them noi dung vao truoc va sau cac the trong html*/
+    box-sizing: border-box;
+}
+/* chinh width va height cua box de hon  */
+
+:root { /*dung de chon phan tu goc trong trang web, cu the la the <html>*/
+    --cell-size: 100px; /*khai bao thuoc tinh nhu o trong SCSS, khai bao truoc de khong phai viet lai ma se dung luon*/
+    --mark-size: calc(var(--cell-size) * .9); /*to nho cua X va O*/
+}
+
+body {
+    margin: 0;
+}
+.table {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(3, auto);
+}
+
+.cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.cell.x,
+.cell.circle {
+    cursor: not-allowed;
+}
+
+.cell.x::before,
+.cell.x::after,
+.cell.circle::before {
+    background-color: black;
+}
+
+.table.x .cell:not(.x):not(.circle):hover::before,
+.table.x .cell:not(.x):not(.circle):hover::after,
+.table.circle .cell:not(.x):not(.circle):hover::before {
+    background-color: gray;
+}
+
+
+.cell.x::before,
+.cell.x::after,
+.table.x .cell:not(.x):not(.circle):hover::before, /*dua con chuot len nhung o trong la se hien ra luot cua X hay O*/
+.table.x .cell:not(.x):not(.circle):hover::after {
+    content: '';
+    position: absolute;
+    width: calc(var(--mark-size) * .15);
+    height: var(--mark-size);
+}
+
+.cell.x::before,
+.table.x .cell:not(.x):not(.circle):hover::before {
+    transform: rotate(45deg);
+}
+
+.cell.x::after,
+.table.x .cell:not(.x):not(.circle):hover::after {
+    transform:rotate(-45deg);
+}
+
+.cell.circle::before,
+.cell.circlce::after,
+.table.circle .cell:not(.x):not(.circle):hover::before,
+.table.circle .cell:not(.x):not(.circle):hover::after {  /*tai sao cai nay khong hien O nhung hover vao thi X hien ra trong tron tron ???*/
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+}
+
+.cell.circle::before,
+.table.circle .cell:not(.x):not(.circle):hover::before {
+    width: var(--mark-size);
+    height: var(--mark-size);
+}
+
+.cell.circle::after,
+.table.circle .cell:not(.x):not(.circle):hover::after {
+    width: calc(var(--mark-size) * .7);
+    height: calc(var(--mark-size) * .7);
+    background-color: white;
+}
+
+.win {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color:cyan;
+    justify-content: center;
+    align-items: center;
+    color: red;
+    font-size: 4rem;
+    flex-direction: column; /*tai sao de flex o day thi co hover nhung de duoi show thi khong co ????*/
+}
+
+.win button {
+    font-size: 2rem;
+    background-color:white;
+    border: 1px solid black;
+    padding: .25em .5em;
+    cursor: pointer;
+}
+
+.win button:hover {
+    background-color:black;
+    color: white;
+    border-color: white;
+}
+
+.win.show {
+    display: flex;
+}
+/* va tai sao sau khi them cai js thi tat ca thuoc tinh cua css deu khong chay nua ??? Ke ca js cung khong chay luon, rac ruoi ?*/
